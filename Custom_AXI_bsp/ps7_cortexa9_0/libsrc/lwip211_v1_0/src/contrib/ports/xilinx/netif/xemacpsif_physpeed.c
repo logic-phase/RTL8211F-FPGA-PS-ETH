@@ -156,16 +156,17 @@
 #define EMACPS_SLCR_DIV_MASK	0xFC0FC0FF
 
 
-#define RTL8211F_PAGSR 				0x001F
-#define RTL8211F_MIICR 				0x0d08
-#define RTL8211F_MIICR_REG1 		0x0011
-#define RTL8211F_MIICR_REG2 		0x0015
-#define RTL8211F_TxDLY_MASK			0x01<<8
-#define RTL8211F_RxDLY_MASK			0x01<<3
-#define RTL8211F_Link_Up_MASK 		0x01<<2
-#define RTL8211F_SPEED_MASK			0x30
-#define RTL8211F_SPEED_1000			0x20
-#define RTL8211F_SPEED_100			0x10
+#define RTL8211F_PAGSR 						0x001F
+#define RTL8211F_MIICR 						0x0d08
+#define RTL8211F_MIICR_REG1 				0x0011
+#define RTL8211F_MIICR_REG2 				0x0015
+#define RTL8211F_TxDLY_MASK					0x01<<8
+#define RTL8211F_RxDLY_MASK					0x01<<3
+#define RTL8211F_Link_Up_MASK 				0x01<<2
+#define RTL8211F_SPECIFIC_STATUS_REG 		0x1A
+#define RTL8211F_SPEED_MASK					0x30
+#define RTL8211F_SPEED_1000					0x20
+#define RTL8211F_SPEED_100					0x10
 
 
 #if XPAR_GIGE_PCS_PMA_1000BASEX_CORE_PRESENT == 1 || \
@@ -674,7 +675,7 @@ static u32_t get_Realtek_phy_speed(XEmacPs *xemacpsp, u32_t phy_addr)
 	}
 	xil_printf("autonegotiation complete \r\n");
 
-	XEmacPs_PhyRead(xemacpsp, phy_addr,IEEE_SPECIFIC_STATUS_REG,
+	XEmacPs_PhyRead(xemacpsp, phy_addr,RTL8211F_SPECIFIC_STATUS_REG,
 					&status_speed);
 	if (status_speed & (RTL8211F_Link_Up_MASK)) {
 		temp_speed = status_speed & RTL8211F_SPEED_MASK;
